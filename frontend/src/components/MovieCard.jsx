@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/MovieCard.css";
 
 const MovieCard = ({ movie }) => {
   const onFavoriteClick = () => {
@@ -10,7 +11,7 @@ const MovieCard = ({ movie }) => {
       <div className="movie-poster">
         <img src={movie.url} alt={movie.title} />
         <div className="movie-overlay">
-          <button className="favorrite-btn" onClick={onFavoriteClick}>
+          <button className="favorite-btn" onClick={onFavoriteClick}>
             🤍
           </button>
         </div>
