@@ -1,16 +1,10 @@
 import "./App.css";
-import MovieCard from "./components/MovieCard";
-
-const movie = {
-  title: "Tim's Film",
-  release_date: "2025",
-  url: "",
-};
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
-      <MovieCard movie={movie} />
+      <Home />
     </>
   );
 }
