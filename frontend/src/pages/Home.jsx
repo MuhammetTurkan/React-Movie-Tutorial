@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "../css/Home.css";
 import MovieCard from "../components/MovieCard";
 
 const movies = [
@@ -7,19 +7,19 @@ const movies = [
     id: 1,
     title: "John Wick",
     release_date: "2020",
-    url: "https://placehold.co/300x200/b1b1b1/ffffff.png",
+    url: "https://placehold.co/400",
   },
   {
     id: 2,
     title: "Terminator",
     release_date: "1999",
-    url: "https://placehold.co/300x200/b1b1b1/ffffff.png",
+    url: "https://placehold.co/400",
   },
   {
     id: 3,
     title: "The Matrix",
     release_date: "1998",
-    url: "https://placehold.co/300x200/b1b1b1/ffffff.png",
+    url: "https://placehold.co/400",
   },
 ];
 
