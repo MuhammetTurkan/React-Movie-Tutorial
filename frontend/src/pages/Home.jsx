@@ -1,34 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/Home.css";
 import MovieCard from "../components/MovieCard";
-
-const movies = [
-  {
-    id: 1,
-    title: "John Wick",
-    release_date: "2020",
-    url: "https://placehold.co/400",
-  },
-  {
-    id: 2,
-    title: "Terminator",
-    release_date: "1999",
-    url: "https://placehold.co/400",
-  },
-  {
-    id: 3,
-    title: "The Matrix",
-    release_date: "1998",
-    url: "https://placehold.co/400",
-  },
-];
+import { searchMovies, getPopularMovies } from "../services/api";
 
 const Home = () => {
   const [query, setQuery] = useState();
-  const handleSearch = (e) => {
+  const [movies, setMovies] = useState([]);
+  const [eroor, setEroor] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadPopularMovies = async () => {
+      try {
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      } catch (err) {
+        console.log(err);
+        setEroor("Failed to load movies...");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPopularMovies();
+  }, []);
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    alert(query);
-    setQuery("");
+    if (!query.trim()) return;
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const searchResults = await searchMovies(query);
+      setMovies(searchResults);
+      setEroor(null);
+    } catch (err) {
+      console.log(err);
+      setEroor("Failed to search movies...");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,11 +60,17 @@ const Home = () => {
           Search
         </button>
       </form>
-      <div className="movies-grid">
-        {movies.map((movie) => (
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
-      </div>
+      {eroor && <div className="error-message">{eroor}</div>}
+
+      {loading ? (
+        <div className="loading">Loading....</div>
+      ) : (
+        <div className="movies-grid">
+          {movies.map((movie) => (
+            <MovieCard movie={movie} key={movie.id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
