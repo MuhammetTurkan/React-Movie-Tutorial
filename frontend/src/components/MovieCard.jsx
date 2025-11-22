@@ -1,9 +1,16 @@
 import React from "react";
 import "../css/MovieCard.css";
+import { useMovieContext } from "../context/MovieContext";
+import { GoHeartFill } from "react-icons/go";
 
 const MovieCard = ({ movie }) => {
-  const onFavoriteClick = () => {
-    alert("clicked");
+  const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
+  const favorite = isFavorite(movie.id);
+  const onFavoriteClick = (e) => {
+    e.preventDefault();
+
+    if (favorite) removeFromFavorites(movie.id);
+    else addToFavorites(movie);
   };
 
   return (
@@ -14,8 +21,11 @@ const MovieCard = ({ movie }) => {
           alt={movie.title}
         />
         <div className="movie-overlay">
-          <button className="favorite-btn" onClick={onFavoriteClick}>
-            🤍
+          <button
+            className={`favorite-btn ${favorite ? "active" : ""}`}
+            onClick={onFavoriteClick}
+          >
+            <GoHeartFill />
           </button>
         </div>
       </div>

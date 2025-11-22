@@ -65,11 +65,14 @@ const Home = () => {
       {loading ? (
         <div className="loading">Loading....</div>
       ) : (
-        <div className="movies-grid">
-          {movies.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
-        </div>
+        <>
+          {!eroor && <div className="head-title">Popular Movies</div>}
+          <div className="movies-grid">
+            {movies.map((movie) => (
+              <MovieCard movie={movie} key={movie.id} />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
